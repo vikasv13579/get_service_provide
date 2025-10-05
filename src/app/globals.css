@@ -104,9 +104,11 @@
   @keyframes fadeIn {
     from {
       opacity: 0;
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -119,8 +121,21 @@
     }
   }
 
+  @keyframes spinSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .animate-slide-down {
     animation: slideDown 200ms ease-out both;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-out both;
   }
 
   .animate-fade-in {
@@ -129,5 +144,9 @@
 
   .animate-marquee {
     animation: marquee 25s linear infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spinSlow 3s linear infinite;
   }
 }

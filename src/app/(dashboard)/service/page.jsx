@@ -2,5 +2,5 @@
 import React from "react";
 
 export default function Service() {
-  return <div>Service</div>;
+  return <div>Page is in Uder Construction</div>;
 }

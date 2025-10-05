@@ -28,7 +28,7 @@ const Carousel = ({ images, autoPlay = true, interval = 3000 }) => {
   return (
     <div className="relative w-full bg-white dark:bg-gray-800 overflow-hidden">
       {/* Main carousel container */}
-      <div className="relative h-[250px] md:h-[300px] lg:h-[400px]">
+      <div className="relative h-[250px] md:h-[300px] lg:h-[400px] bg-gradient-to-br from-blue-50 to-blue-100">
         {images.map((image, index) => (
           <div
             key={index}

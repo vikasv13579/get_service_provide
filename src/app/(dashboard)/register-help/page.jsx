@@ -2,7 +2,7 @@
 import React from "react";
 
 function Register() {
-  return <div>Register</div>;
+  return <div>Page is in Uder Construction</div>;
 }
 
 export default Register;

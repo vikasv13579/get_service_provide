@@ -22,14 +22,14 @@ export default function DashboardLayout({ children }) {
   if (!isMounted) return <LoadingSpinner />;
 
   return (
-    <>
-      <header className="fixed top-0 left-0 right-0  bg-[#07222e] z-50 h-20 border-b-2 border-border shadow-2xl ">
+    <div className="min-h-screen flex flex-col">
+      <header className="fixed top-0 left-0 right-0 bg-[#07222e] z-50 h-20 border-b-2 border-border shadow-2xl">
         <Header />
       </header>
-      <main className="flex-1 pt-20">{children}</main>
-      <footer className="h-16 bg-card text-card-foreground border-t border-border flex items-center justify-center z-40">
+      <main className="flex-1 pt-20 pb-8">{children}</main>
+      <footer className="w-full border-t border-gray-300 dark:border-gray-700">
         <Footer />
       </footer>
-    </>
+    </div>
   );
 }
