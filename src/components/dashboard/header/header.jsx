@@ -123,12 +123,12 @@ export default function Header() {
               <UserPlus size={16} className="flex-shrink-0" />
               <span className="text-xs sm:text-sm">Login</span>
             </button>
-            <button
+            {/* <button
               onClick={() => handleAuthClick("signup")}
               className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer text-xs sm:text-sm p-1 sm:p-2 rounded-lg"
             >
               <span>Sign Up</span>
-            </button>
+            </button> */}
           </div>
         )}
       </div>
