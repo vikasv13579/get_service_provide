@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Authentication (Firebase)
+
+This project supports Google and phone number login using Firebase Authentication.
+
+### 1) Enable Providers in Firebase Console
+- Create a Firebase project.
+- Go to Authentication → Sign-in method:
+  - Enable Google provider.
+  - Enable Phone provider. Add your app domain(s) to Authorized domains.
+  - For local testing, add test phone numbers in the Phone provider settings.
+
+### 2) Add Environment Variables
+Create `gem_service/.env.local` with:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=xxxxxxxxxxxx
+NEXT_PUBLIC_FIREBASE_APP_ID=1:xxxxxxxxxxxx:web:xxxxxxxxxxxxxxxxxxxxxx
+```
+
+Restart the dev server after adding env vars.
+
+### 3) Usage
+- Visit `/login` to sign in with Google or phone number. Phone flow uses an invisible reCAPTCHA.
+- On success, users are redirected to `/dashboard`.
+
+### Notes
+- Ensure your dev URL (e.g., `http://localhost:3000`) is listed in Firebase → Authentication → Settings → Authorized domains.
+- Recommended Node.js v20+ for latest Firebase SDK.
