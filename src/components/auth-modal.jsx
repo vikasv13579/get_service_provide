@@ -268,7 +268,7 @@ export default function AuthModal({
         await signOut(auth);
         console.log("✅ User signed out after registration");
 
-        // Step 4: Show success message and switch to login (KEEP MODAL OPEN)
+        // Step 4: Show success message and switch to login mode (KEEP MODAL OPEN)
         setSuccessMessage(
           "🎉 Registration Successful! Now please sign in with your credentials."
         );
@@ -483,10 +483,10 @@ export default function AuthModal({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[10000]"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700 animate-fade-in-scale my-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
           <div>
