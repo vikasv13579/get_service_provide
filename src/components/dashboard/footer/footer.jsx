@@ -5,18 +5,18 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200">
-      <div className="w-full px-6 md:px-12 lg:px-16 py-12">
+    <div className="w-full bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white transition-all duration-300 border-t border-gray-200 dark:border-gray-700">
+      <div className="w-full px-6 md:px-12 lg:px-16 py-12 lg:py-16">
         <div className="w-full">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             {/* Brand & Description */}
             <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+              <div className="flex items-center mb-5 group">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-xl transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   G
                 </div>
-                <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+                <span className="ml-3 text-2xl font-bold bg-gradient-to-r from-gray-900 to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent">
                   GeMCore
                 </span>
               </div>
@@ -24,43 +24,59 @@ export default function Footer() {
                 Leading gem and mineral solutions provider, delivering
                 excellence in quality, service, and innovation since 2020.
               </p>
+              <div className="mt-6 flex gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:shadow-lg transform hover:scale-110 transition-all duration-300 cursor-pointer">
+                  <span className="text-xl">🏆</span>
+                </div>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-100 to-emerald-100 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-green-600 dark:text-green-400 hover:shadow-lg transform hover:scale-110 transition-all duration-300 cursor-pointer">
+                  <span className="text-xl">⭐</span>
+                </div>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-purple-600 dark:text-purple-400 hover:shadow-lg transform hover:scale-110 transition-all duration-300 cursor-pointer">
+                  <span className="text-xl">💎</span>
+                </div>
+              </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-gray-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+              <h3 className="text-gray-900 dark:text-white font-bold mb-5 text-base flex items-center gap-2">
+                <span className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></span>
                 Quick Links
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 <li>
                   <Link
                     href="/dashboard"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Dashboard
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/service"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Services
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/gem-advantages"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Gem Advantages
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/blog"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Blog
                   </Link>
                 </li>
@@ -69,33 +85,38 @@ export default function Footer() {
 
             {/* Support */}
             <div>
-              <h3 className="text-gray-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+              <h3 className="text-gray-900 dark:text-white font-bold mb-5 text-base flex items-center gap-2">
+                <span className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></span>
                 Support
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 <li>
                   <Link
                     href="/contact"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Contact Us
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/register-help"
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Register Help
                   </Link>
                 </li>
                 <li>
-                  <span className="text-gray-600 dark:text-gray-400 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <span className="text-gray-600 dark:text-gray-400 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center gap-2 group">
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     FAQ
                   </span>
                 </li>
                 <li>
-                  <span className="text-gray-600 dark:text-gray-400 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <span className="text-gray-600 dark:text-gray-400 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center gap-2 group">
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
                     Help Center
                   </span>
                 </li>
@@ -104,47 +125,71 @@ export default function Footer() {
 
             {/* Contact Info */}
             <div>
-              <h3 className="text-gray-900 dark:text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+              <h3 className="text-gray-900 dark:text-white font-bold mb-5 text-base flex items-center gap-2">
+                <span className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></span>
                 Contact Info
               </h3>
-              <ul className="space-y-3">
-                <li className="text-gray-600 dark:text-gray-400 text-sm">
-                  <div className="font-medium text-gray-700 dark:text-gray-300">
-                    Email
+              <ul className="space-y-4">
+                <li className="text-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-lg">📧</span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-300">
+                      Email
+                    </span>
                   </div>
-                  support@gemcore.com
+                  <a
+                    href="mailto:support@gemcore.com"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    support@gemcore.com
+                  </a>
                 </li>
-                <li className="text-gray-600 dark:text-gray-400 text-sm">
-                  <div className="font-medium text-gray-700 dark:text-gray-300">
-                    Phone
+                <li className="text-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-lg">📞</span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-300">
+                      Phone
+                    </span>
                   </div>
-                  +1 (555) 123-4567
+                  <a
+                    href="tel:+15551234567"
+                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    +1 (555) 123-4567
+                  </a>
                 </li>
-                <li className="text-gray-600 dark:text-gray-400 text-sm">
-                  <div className="font-medium text-gray-700 dark:text-gray-300">
-                    Address
+                <li className="text-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-lg">📍</span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-300">
+                      Address
+                    </span>
                   </div>
-                  123 Gem Street, Suite 100
-                  <br />
-                  New York, NY 10001
+                  <p className="text-gray-600 dark:text-gray-400">
+                    123 Gem Street, Suite 100
+                    <br />
+                    New York, NY 10001
+                  </p>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="border-t border-gray-300 dark:border-gray-800 pt-6">
-            <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="border-t border-gray-300 dark:border-gray-800 pt-8 mt-4">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               {/* Copyright */}
-              <div className="text-sm text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
-                © 2025 GeMCore Solutions. All rights reserved.
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="font-medium">© 2025 GeMCore Solutions.</span>
+                <span className="mx-2">•</span>
+                <span>Crafted with ❤️ by our team</span>
               </div>
 
               {/* Social Links */}
-              <div className="flex space-x-6">
+              <div className="flex gap-3">
                 <a
                   href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:shadow-lg transform hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                   aria-label="Facebook"
                 >
                   <svg
@@ -157,7 +202,7 @@ export default function Footer() {
                 </a>
                 <a
                   href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-100 to-sky-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-sky-600 dark:text-sky-400 hover:shadow-lg transform hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                   aria-label="Twitter"
                 >
                   <svg
@@ -170,7 +215,7 @@ export default function Footer() {
                 </a>
                 <a
                   href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-blue-700 dark:text-blue-400 hover:shadow-lg transform hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                   aria-label="LinkedIn"
                 >
                   <svg
@@ -183,7 +228,7 @@ export default function Footer() {
                 </a>
                 <a
                   href="#"
-                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-100 to-rose-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center text-pink-600 dark:text-pink-400 hover:shadow-lg transform hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                   aria-label="Instagram"
                 >
                   <svg

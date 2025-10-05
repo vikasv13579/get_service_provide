@@ -26,26 +26,26 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="flex items-center gap-1 lg:gap-2 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer"
+      className="relative flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 hover:from-blue-100 hover:to-purple-100 dark:hover:from-gray-700 dark:hover:to-gray-600 border border-gray-200 dark:border-gray-600 transition-all duration-300 cursor-pointer hover:shadow-lg group"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
       {isDark ? (
         <>
           <Sun
-            size={14}
-            className="lg:w-4 lg:h-4 text-yellow-500 dark:text-yellow-400 flex-shrink-0"
+            size={16}
+            className="text-yellow-500 flex-shrink-0 group-hover:rotate-90 transition-transform duration-500"
           />
-          <span className="text-xs lg:text-sm font-medium whitespace-nowrap">
+          <span className="text-xs lg:text-sm font-medium whitespace-nowrap text-gray-700 dark:text-gray-200">
             Light
           </span>
         </>
       ) : (
         <>
           <Moon
-            size={14}
-            className="lg:w-4 lg:h-4 text-blue-500 dark:text-blue-400 flex-shrink-0"
+            size={16}
+            className="text-blue-600 flex-shrink-0 group-hover:-rotate-12 transition-transform duration-500"
           />
-          <span className="text-xs lg:text-sm font-medium whitespace-nowrap">
+          <span className="text-xs lg:text-sm font-medium whitespace-nowrap text-gray-700 dark:text-gray-200">
             Dark
           </span>
         </>

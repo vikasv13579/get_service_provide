@@ -22,12 +22,16 @@ export default function DashboardLayout({ children }) {
   if (!isMounted) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="fixed top-0 left-0 right-0 bg-[#07222e] z-50 h-20 border-b-2 border-border shadow-2xl">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-blue-50/20 to-purple-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
+      <header className="fixed top-0 left-0 right-0 z-50 shadow-xl">
         <Header />
       </header>
-      <main className="flex-1 pt-20 pb-8">{children}</main>
-      <footer className="w-full border-t border-gray-300 dark:border-gray-700">
+      <main className="flex-1 pt-32 md:pt-36 pb-12 min-h-screen">
+        <div className="animate-fade-in">
+          {children}
+        </div>
+      </main>
+      <footer className="w-full">
         <Footer />
       </footer>
     </div>

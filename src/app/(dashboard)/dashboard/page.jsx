@@ -25,11 +25,22 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-1">
-      <div className="mb-2">
-        <Carousel images={carouselImages} autoPlay={true} interval={2000} />
+    <div className="space-y-8 md:space-y-12">
+      <div className="px-4 md:px-6 lg:px-8">
+        <Carousel images={carouselImages} autoPlay={true} interval={3000} />
       </div>
-      <div className="px-2 pb-2">
+
+      {/* Services Section */}
+      <div className="px-4 md:px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+            Our Premium Services
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto">
+            Discover our comprehensive range of services designed to help your
+            business thrive in the digital era
+          </p>
+        </div>
         <DashboardCards />
       </div>
     </div>
