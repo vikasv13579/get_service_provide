@@ -155,7 +155,7 @@ export default function Footer() {
                     href="tel:+15551234567"
                     className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
-                    +1 (555) 123-4567
+                    +91 9917616163
                   </a>
                 </li>
                 <li className="text-sm">
@@ -166,9 +166,9 @@ export default function Footer() {
                     </span>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400">
-                    123 Gem Street, Suite 100
+                    125 Chhattarpur encalve
                     <br />
-                    New York, NY 10001
+                    New Delhi, India 110074
                   </p>
                 </li>
               </ul>
