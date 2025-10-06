@@ -516,7 +516,7 @@ export default function RegisterHelp() {
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
                   <Phone className="w-10 h-10 mx-auto mb-3" />
                   <p className="font-semibold mb-2">Call Us</p>
-                  <p className="text-sm text-indigo-100">+91 123 456 7890</p>
+                  <p className="text-sm text-indigo-100">+91 9199176163</p>
                   <p className="text-xs text-indigo-200 mt-1">
                     Mon-Fri, 9 AM - 6 PM
                   </p>
@@ -526,7 +526,7 @@ export default function RegisterHelp() {
                   <Mail className="w-10 h-10 mx-auto mb-3" />
                   <p className="font-semibold mb-2">Email Us</p>
                   <p className="text-sm text-indigo-100">
-                    support@gemservice.com
+                    zemtechexperts@gmail.com
                   </p>
                   <p className="text-xs text-indigo-200 mt-1">
                     24-48 hour response

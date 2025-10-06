@@ -138,10 +138,10 @@ export default function Footer() {
                     </span>
                   </div>
                   <a
-                    href="mailto:support@gemcore.com"
+                    href="mailto:zemtechexperts@gmail.com"
                     className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
-                    support@gemcore.com
+                    zemtechexperts@gmail.com
                   </a>
                 </li>
                 <li className="text-sm">
@@ -166,8 +166,6 @@ export default function Footer() {
                     </span>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400">
-                    125 Chhattarpur encalve
-                    <br />
                     New Delhi, India 110074
                   </p>
                 </li>

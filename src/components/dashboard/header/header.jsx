@@ -145,12 +145,12 @@ export default function Header() {
             <span className="mx-4 text-amber-600 dark:text-amber-300">•</span>
             <span className="text-amber-800 dark:text-amber-200">
               📞 Contact us anytime at{" "}
-              <span className="font-semibold">+91 99176 16163</span>
+              <span className="font-semibold">+91 9199176163</span>
             </span>
             <span className="mx-4 text-amber-600 dark:text-amber-300">•</span>
             <span className="text-amber-800 dark:text-amber-200">
               📧 Email:{" "}
-              <span className="font-semibold">support@gemcore.com</span>
+              <span className="font-semibold">zemtechexperts@gmail.com</span>
             </span>
             <span className="mx-4 text-amber-600 dark:text-amber-300">•</span>
             <span className="text-amber-800 dark:text-amber-200">

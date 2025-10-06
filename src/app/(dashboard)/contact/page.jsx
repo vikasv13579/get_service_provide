@@ -193,10 +193,10 @@ function ContactUs() {
               Send us an email anytime
             </p>
             <a
-              href="mailto:support@gemservice.com"
+              href="mailto:zemtechexperts@gmail.com"
               className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
             >
-              support@gemservice.com
+              zemtechexperts@gmail.com
             </a>
           </div>
 
@@ -214,7 +214,7 @@ function ContactUs() {
               href="tel:+91 9199176163"
               className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline"
             >
-              +91 123 456 7890
+              +91 9199176163
             </a>
           </div>
 
