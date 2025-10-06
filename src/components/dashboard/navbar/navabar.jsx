@@ -21,7 +21,7 @@ export default function Navbar({ onAuthClick }) {
   const router = useRouter();
 
   const links = [
-    { name: "Gem Advantage", href: "/dashboard", icon: Home },
+    { name: "Gem Advantage", href: "/gem-advantages", icon: Home },
     { name: "Service", href: "/service", icon: Settings },
     { name: "Blog", href: "/blog", icon: BarChart3 },
     { name: "Contact", href: "/contact", icon: User },
