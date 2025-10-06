@@ -155,7 +155,7 @@ export default function Footer() {
                     href="tel:+15551234567"
                     className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
-                    +91 9917616163
+                    +91 9199176163
                   </a>
                 </li>
                 <li className="text-sm">

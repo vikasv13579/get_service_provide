@@ -211,7 +211,7 @@ function ContactUs() {
               Mon-Fri from 9am to 6pm
             </p>
             <a
-              href="tel:+911234567890"
+              href="tel:+91 9199176163"
               className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline"
             >
               +91 123 456 7890

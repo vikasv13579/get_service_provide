@@ -5,7 +5,7 @@ import React from "react";
 const WhatsAppButton = () => {
   // Replace with your actual WhatsApp number (include country code without + or spaces)
   // Example: for +1 234 567 8900, use "12345678900"
-  const phoneNumber = "919917616163"; // Fixed: removed + and space for WhatsApp URL
+  const phoneNumber = "919199176163"; // Fixed: removed + and space for WhatsApp URL
 
   // Pre-filled message (optional)
   const message = "Hello! I'm interested in your services.";
