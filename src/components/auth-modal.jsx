@@ -595,7 +595,7 @@ export default function AuthModal({
               <Mail size={16} />
               Email
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 setAuthMethod("phone");
                 setError("");
@@ -609,7 +609,7 @@ export default function AuthModal({
             >
               <Phone size={16} />
               Phone
-            </button>
+            </button> */}
           </div>
 
           {/* Email/Password Form */}
