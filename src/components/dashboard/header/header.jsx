@@ -20,6 +20,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await logout();
+      router.push("/dashboard");
       // Stay on the same page after logout
     } catch (error) {
       console.error("Error logging out:", error);
