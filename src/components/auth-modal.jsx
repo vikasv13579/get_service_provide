@@ -544,7 +544,7 @@ export default function AuthModal({
           )}
 
           {/* Google Auth */}
-          <button
+          {/* <button
             onClick={handleGoogleAuth}
             disabled={isSubmitting}
             className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -576,7 +576,7 @@ export default function AuthModal({
               or
             </span>
             <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
-          </div>
+          </div> */}
 
           {/* Auth Method Tabs */}
           <div className="flex mb-4 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
