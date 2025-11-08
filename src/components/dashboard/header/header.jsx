@@ -68,7 +68,7 @@ export default function Header() {
                 {/* Enhanced Brand Text */}
                 <div className="flex flex-col">
                   <h1 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:via-purple-600 group-hover:to-blue-800 dark:group-hover:from-blue-300 dark:group-hover:via-purple-300 dark:group-hover:to-blue-400 transition-all duration-300 truncate">
-                    GeMCore Solutions
+                    GeMCore
                   </h1>
                   <div className="flex items-center gap-1 mt-0.5">
                     <div className="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:w-16 sm:group-hover:w-20 transition-all duration-300"></div>
@@ -163,12 +163,12 @@ export default function Header() {
       </div>
 
       {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        defaultMode={authMode}
-        redirectTo={redirectTo}
-      />
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          defaultMode={authMode}
+          redirectTo={redirectTo}
+        />
     </header>
   );
 }
