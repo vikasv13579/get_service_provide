@@ -34,6 +34,7 @@ export default function AuthModal({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
 
@@ -63,6 +64,7 @@ export default function AuthModal({
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      setFullName("");
       setCompanyName("");
       setMobileNumber("");
       setPhoneNumber("+91"); // Reset to default country code
@@ -178,6 +180,22 @@ export default function AuthModal({
         return;
       }
 
+      // Validate full name
+      if (!fullName || fullName.trim().length === 0) {
+        setError("Full name is required");
+        return;
+      }
+
+      if (fullName.trim().length < 2) {
+        setError("Full name must be at least 2 characters");
+        return;
+      }
+
+      if (fullName.trim().length > 100) {
+        setError("Full name must be less than 100 characters");
+        return;
+      }
+
       // Validate company name
       if (!companyName || companyName.trim().length === 0) {
         setError("Company name is required");
@@ -239,6 +257,7 @@ export default function AuthModal({
             setMode("login");
             setSuccessMessage("");
             setPassword("");
+            setFullName("");
             setCompanyName("");
             setMobileNumber("");
             setConfirmPassword("");
@@ -254,14 +273,33 @@ export default function AuthModal({
         await saveUserProfile(user.uid, {
           uid: user.uid,
           email: trimmedEmail,
+          fullName: fullName.trim(),
           companyName: companyName.trim(),
           mobileNumber: `+91${cleanMobile}`,
-          displayName: companyName.trim(),
+          displayName: fullName.trim(),
           role: "user",
           isActive: true,
           provider: "email",
           emailVerified: false,
         });
+
+        // Send registration email to admin
+        try {
+          await fetch('/api/send-registration-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: trimmedEmail,
+              fullName: fullName.trim(),
+              companyName: companyName.trim(),
+              mobileNumber: `+91${cleanMobile}`,
+            }),
+          });
+          console.log('✅ Admin notification email sent');
+        } catch (emailError) {
+          console.error('❌ Failed to send admin email:', emailError);
+          // Don't block registration if email fails
+        }
 
         // Sign out after registration
         await signOut(auth);
@@ -273,6 +311,7 @@ export default function AuthModal({
           setMode("login");
           setPassword("");
           setConfirmPassword("");
+          setFullName("");
           setCompanyName("");
           setMobileNumber("");
         }, 2000);
@@ -286,6 +325,7 @@ export default function AuthModal({
           setMode("login");
           setSuccessMessage("");
           setPassword("");
+          setFullName("");
           setCompanyName("");
           setMobileNumber("");
           setConfirmPassword("");
@@ -598,6 +638,31 @@ export default function AuthModal({
 
               {mode === "signup" && (
                 <>
+                  <div>
+                    <label
+                      htmlFor="fullName"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
+                      Full Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="fullName"
+                      type="text"
+                      value={fullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                        // Clear errors when user starts typing
+                        if (error) setError("");
+                      }}
+                      required
+                      minLength="2"
+                      maxLength="100"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                      placeholder="John Doe"
+                      autoComplete="name"
+                    />
+                  </div>
+
                   <div>
                     <label
                       htmlFor="companyName"
