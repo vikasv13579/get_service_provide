@@ -14,6 +14,7 @@ import {
   clearRecaptchaVerifier,
   saveUserProfile,
   signOut,
+  fetchSignInMethodsForEmail,
 } from "@/lib/firebase";
 import { X, Mail, Phone, User, Lock, Eye, EyeOff } from "lucide-react";
 
@@ -48,13 +49,13 @@ export default function AuthModal({
 
   // Close modal when user is authenticated and redirect if needed
   useEffect(() => {
-    if (currentUser && isOpen) {
+    if (currentUser && isOpen && mode === "login") {
       onClose();
       if (redirectTo) {
         router.push(redirectTo);
       }
     }
-  }, [currentUser, isOpen, onClose, redirectTo, router]);
+  }, [currentUser, isOpen, mode, onClose, redirectTo, router]);
 
   // Reset form when modal opens/closes
   useEffect(() => {
@@ -103,12 +104,13 @@ export default function AuthModal({
         router.push(redirectTo);
       }
     } catch (e) {
+      // Firebase logs errors automatically
       let errorMessage = "Failed to sign in with Google. ";
-      if (e.code === "auth/popup-closed-by-user") {
+      if (e?.code === "auth/popup-closed-by-user") {
         errorMessage = "Sign-in cancelled. Please try again.";
-      } else if (e.code === "auth/popup-blocked") {
+      } else if (e?.code === "auth/popup-blocked") {
         errorMessage = "Pop-up blocked. Please allow pop-ups for this site.";
-      } else if (e.code === "auth/cancelled-popup-request") {
+      } else if (e?.code === "auth/cancelled-popup-request") {
         errorMessage = "Sign-in cancelled. Please try again.";
       } else {
         errorMessage += e?.message || "Please try again.";
@@ -213,158 +215,96 @@ export default function AuthModal({
     }
 
     setIsSubmitting(true);
+    
     try {
       if (mode === "login") {
-        // Login - normal flow
+        // Login
         await signInWithEmailAndPassword(auth, trimmedEmail, password);
-
-        // Show brief success message before closing
+        
         setSuccessMessage("✅ Login successful! Redirecting...");
-        setError("");
-
-        // Close modal and redirect after brief delay
         setTimeout(() => {
           onClose();
-          if (redirectTo) {
-            router.push(redirectTo);
-          }
+          if (redirectTo) router.push(redirectTo);
         }, 800);
       } else {
         // Signup - create account, save profile, then sign out
         const cleanMobile = mobileNumber.replace(/\D/g, "");
 
-        // Step 1: Create Firebase Authentication account
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          trimmedEmail,
-          password
-        );
-        const user = userCredential.user;
-
-        console.log("✅ User account created:", user.uid);
-
-        // Step 2: Save complete user profile to Firestore
-        try {
-          await saveUserProfile(user.uid, {
-            uid: user.uid,
-            email: trimmedEmail,
-            companyName: companyName.trim(),
-            mobileNumber: `+91${cleanMobile}`,
-            displayName: companyName.trim(),
-            role: "user",
-            isActive: true,
-            provider: "email",
-            emailVerified: false,
-          });
-          console.log("✅ User profile saved to Firestore");
-        } catch (profileError) {
-          console.error("❌ Failed to save profile:", profileError);
-          // Delete the auth account if profile save fails
-          await user.delete();
-          throw new Error("Failed to create account. Please try again.");
+        // Check if email already exists
+        const signInMethods = await fetchSignInMethodsForEmail(auth, trimmedEmail);
+        if (signInMethods && signInMethods.length > 0) {
+          setIsSubmitting(false);
+          setSuccessMessage("✅ This email is already registered. Switching to Sign In...");
+          setTimeout(() => {
+            setMode("login");
+            setSuccessMessage("");
+            setPassword("");
+            setCompanyName("");
+            setMobileNumber("");
+            setConfirmPassword("");
+          }, 2000);
+          return;
         }
 
-        // Step 3: Sign out immediately after signup
+        // Create account
+        const userCredential = await createUserWithEmailAndPassword(auth, trimmedEmail, password);
+        const user = userCredential.user;
+
+        // Save profile to Firestore
+        await saveUserProfile(user.uid, {
+          uid: user.uid,
+          email: trimmedEmail,
+          companyName: companyName.trim(),
+          mobileNumber: `+91${cleanMobile}`,
+          displayName: companyName.trim(),
+          role: "user",
+          isActive: true,
+          provider: "email",
+          emailVerified: false,
+        });
+
+        // Sign out after registration
         await signOut(auth);
-        console.log("✅ User signed out after registration");
 
-        // Step 4: Show success message and switch to login mode (KEEP MODAL OPEN)
-        setSuccessMessage(
-          "🎉 Registration Successful! Now please sign in with your credentials."
-        );
-        setError("");
-        setIsSubmitting(false);
-
-        // Switch to login mode after showing success message
+        // Show success and switch to login
+        setSuccessMessage("🎉 Registration Successful! Please login with your credentials.");
         setTimeout(() => {
+          setSuccessMessage("");
           setMode("login");
           setPassword("");
-          // Clear only signup-specific fields, keep email
+          setConfirmPassword("");
           setCompanyName("");
           setMobileNumber("");
-          setConfirmPassword("");
-
-          // Keep showing a brief success message in login mode
-          setSuccessMessage(
-            "✅ Account created! Enter your password to sign in."
-          );
-
-          // Clear success message after 3 seconds
-          setTimeout(() => {
-            setSuccessMessage("");
-          }, 3000);
-
-          // Focus on password field after switching to login
-          setTimeout(() => {
-            const passwordField = document.getElementById("password");
-            if (passwordField) {
-              passwordField.focus();
-            }
-          }, 100);
         }, 2000);
       }
     } catch (e) {
-      console.error("❌ Email auth error:", e);
-      console.error("Error code:", e.code);
-      console.error("Error message:", e.message);
-      console.error("Full error:", JSON.stringify(e, null, 2));
-
-      // Provide user-friendly error messages
       let errorMessage = "";
-      if (e.code === "auth/operation-not-allowed") {
-        errorMessage =
-          "Email/Password authentication is not enabled. Please contact support or use Google sign-in.";
-      } else if (e.code === "auth/email-already-in-use") {
-        // Don't show as error - handle it gracefully
-        setIsSubmitting(false);
-        setSuccessMessage(
-          "✅ This email is already registered. Switching to Sign In..."
-        );
-        setError("");
-
-        // Switch to login mode with the email pre-filled
+      
+      if (e?.code === "auth/email-already-in-use") {
+        setSuccessMessage("✅ This email is already registered. Switching to Sign In...");
         setTimeout(() => {
           setMode("login");
           setSuccessMessage("");
-          // Keep email and clear other fields
           setPassword("");
           setCompanyName("");
           setMobileNumber("");
           setConfirmPassword("");
         }, 2000);
-        return; // Exit early, don't set error
-      } else if (e.code === "auth/invalid-email") {
-        errorMessage =
-          "Invalid email address format. Please check and try again.";
-      } else if (e.code === "auth/weak-password") {
-        errorMessage =
-          "Password is too weak. Please use at least 6 characters with letters and numbers.";
-      } else if (e.code === "auth/user-not-found") {
-        errorMessage =
-          "No account found with this email. Please sign up first or check your email address.";
-      } else if (e.code === "auth/wrong-password") {
-        errorMessage =
-          "Incorrect password. Please try again or reset your password.";
-      } else if (e.code === "auth/invalid-credential") {
-        errorMessage =
-          mode === "login"
-            ? "Invalid email or password. Please check your credentials and try again."
-            : "Unable to create account. Please check your information and try again.";
-      } else if (e.code === "auth/user-disabled") {
-        errorMessage =
-          "This account has been disabled. Please contact support.";
-      } else if (e.code === "auth/too-many-requests") {
-        errorMessage =
-          "Too many failed attempts. Please try again after some time or reset your password.";
-      } else if (e.code === "auth/network-request-failed") {
-        errorMessage =
-          "Network error. Please check your internet connection and try again.";
+        return;
+      } else if (e?.code === "auth/invalid-credential") {
+        errorMessage = "Invalid email or password. Please try again.";
+      } else if (e?.code === "auth/user-not-found") {
+        errorMessage = "No account found. Please sign up first.";
+      } else if (e?.code === "auth/wrong-password") {
+        errorMessage = "Incorrect password. Please try again.";
+      } else if (e?.code === "auth/weak-password") {
+        errorMessage = "Password must be at least 6 characters.";
+      } else if (e?.code === "auth/too-many-requests") {
+        errorMessage = "Too many failed attempts. Please try again later.";
+      } else if (e?.code === "permission-denied") {
+        errorMessage = "Database permission error. Please contact support.";
       } else {
-        errorMessage =
-          e?.message ||
-          `${
-            mode === "login" ? "Sign-in" : "Sign-up"
-          } failed. Please try again.`;
+        errorMessage = e?.message || `${mode === "login" ? "Sign-in" : "Sign-up"} failed. Please try again.`;
       }
 
       setError(errorMessage);
@@ -411,24 +351,23 @@ export default function AuthModal({
       setError("");
       console.log("OTP sent successfully to", phoneNumber);
     } catch (e) {
-      console.error("Phone auth error:", e);
-
+      // Firebase logs errors automatically
       // Clear verifier on error to allow retry
       clearRecaptchaVerifier();
 
       // Provide user-friendly error messages
       let errorMessage = "Failed to send OTP. ";
-      if (e.code === "auth/invalid-phone-number") {
+      if (e?.code === "auth/invalid-phone-number") {
         errorMessage =
           "Invalid phone number format. Please include country code (e.g., +919876543210)";
-      } else if (e.code === "auth/too-many-requests") {
+      } else if (e?.code === "auth/too-many-requests") {
         errorMessage = "Too many attempts. Please try again later.";
-      } else if (e.code === "auth/quota-exceeded") {
+      } else if (e?.code === "auth/quota-exceeded") {
         errorMessage = "SMS quota exceeded. Please try again later.";
-      } else if (e.code === "auth/billing-not-enabled") {
+      } else if (e?.code === "auth/billing-not-enabled") {
         errorMessage =
           "Phone authentication is currently unavailable. Please use Email or Google sign-in instead.";
-      } else if (e.code === "auth/captcha-check-failed") {
+      } else if (e?.code === "auth/captcha-check-failed") {
         errorMessage =
           "Verification failed. Please try again or use Email/Google sign-in.";
       } else {
@@ -466,8 +405,17 @@ export default function AuthModal({
         router.push(redirectTo);
       }
     } catch (e) {
-      console.error("Verification error:", e);
-      setError(e?.message || "Invalid verification code. Please try again.");
+      // Firebase logs errors automatically
+      let errorMessage = "";
+      if (e?.code === "auth/invalid-verification-code") {
+        errorMessage = "Invalid verification code. Please check the code and try again.";
+      } else if (e?.code === "auth/code-expired") {
+        errorMessage = "Verification code has expired. Please request a new code.";
+      } else {
+        errorMessage = e?.message || "Invalid verification code. Please try again.";
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -510,13 +458,13 @@ export default function AuthModal({
 
         {/* Content */}
         <div className="p-6">
-          {error && (
+          {error && typeof error === 'string' && error.length > 0 && (
             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
             </div>
           )}
 
-          {successMessage && (
+          {successMessage && typeof successMessage === 'string' && successMessage.length > 0 && (
             <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 border-2 border-green-500 dark:border-green-600 rounded-lg shadow-sm">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">

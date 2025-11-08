@@ -13,6 +13,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 
@@ -127,5 +128,6 @@ export {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  fetchSignInMethodsForEmail,
   app
 };

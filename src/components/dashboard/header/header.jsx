@@ -163,12 +163,12 @@ export default function Header() {
       </div>
 
       {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        defaultMode={authMode}
-        redirectTo={redirectTo}
-      />
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          defaultMode={authMode}
+          redirectTo={redirectTo}
+        />
     </header>
   );
 }
