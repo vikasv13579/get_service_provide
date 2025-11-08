@@ -14,6 +14,7 @@ import {
   Clock,
   HeadphonesIcon,
   Globe,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/lib/use-auth";
@@ -31,6 +32,7 @@ function ContactUs() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+  const [showToast, setShowToast] = useState(false);
 
   // Auto-fill form with user data if logged in
   useEffect(() => {
@@ -135,6 +137,13 @@ function ContactUs() {
 
       console.log("✅ Contact Form Submitted Successfully:", data);
       setSubmitStatus("success");
+      setShowToast(true);
+
+      // Auto-hide toast after 5 seconds
+      setTimeout(() => {
+        setShowToast(false);
+        setSubmitStatus(null);
+      }, 5000);
 
       // Reset form after successful submission (only if not authenticated)
       if (!isAuthenticated()) {
@@ -158,6 +167,13 @@ function ContactUs() {
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitStatus("error");
+      setShowToast(true);
+
+      // Auto-hide error toast after 5 seconds
+      setTimeout(() => {
+        setShowToast(false);
+        setSubmitStatus(null);
+      }, 5000);
     } finally {
       setIsSubmitting(false);
     }
@@ -165,6 +181,42 @@ function ContactUs() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Toast Notification */}
+      {showToast && (
+        <div className={`fixed top-4 right-4 z-[9999] animate-slide-in-right ${
+          submitStatus === "success" 
+            ? "bg-green-500" 
+            : "bg-red-500"
+        } text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 max-w-md`}>
+          {submitStatus === "success" ? (
+            <>
+              <CheckCircle className="w-6 h-6 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-lg">✅ Message Sent!</p>
+                <p className="text-sm opacity-90">Your details are saved. We will touch you shortly!</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <AlertCircle className="w-6 h-6 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-lg">❌ Error!</p>
+                <p className="text-sm opacity-90">Failed to send message. Please try again.</p>
+              </div>
+            </>
+          )}
+          <button
+            onClick={() => {
+              setShowToast(false);
+              setSubmitStatus(null);
+            }}
+            className="ml-auto text-white hover:text-gray-200 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
