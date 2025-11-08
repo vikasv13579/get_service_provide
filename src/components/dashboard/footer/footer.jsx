@@ -178,7 +178,7 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               {/* Copyright */}
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-medium">© 2025 GeMCore Solutions.</span>
+                <span className="font-medium">© 2025 GeMCore.</span>
                 <span className="mx-2">•</span>
                 <span>Crafted with ❤️ by our team</span>
               </div>
