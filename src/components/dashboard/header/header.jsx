@@ -72,9 +72,9 @@ export default function Header() {
                   </h1>
                   <div className="flex items-center gap-1 mt-0.5">
                     <div className="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:w-16 sm:group-hover:w-20 transition-all duration-300"></div>
-                    <span className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Premium
-                    </span>
+                    {/* <span className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"> */}
+                      {/* Premium */}
+                    {/* </span> */}
                   </div>
                 </div>
               </div>
