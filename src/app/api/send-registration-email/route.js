@@ -42,7 +42,7 @@ export async function POST(request) {
             .content {
               background: white;
               padding: 30px;
-              border-radius: 0 0 8px 8px;
+              border-radius: 0 0  8px 8px;
             }
             .info-row {
               margin: 15px 0;
