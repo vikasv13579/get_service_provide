@@ -60,9 +60,9 @@ export default function Header() {
                   </div>
 
                   {/* Active Status Dot */}
-                  <div className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse shadow-lg">
+                  {/* <div className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse shadow-lg">
                     <div className="w-2.5 h-2.5 rounded-full bg-white absolute top-0.5 left-0.5"></div>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Enhanced Brand Text */}

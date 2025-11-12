@@ -111,7 +111,7 @@ export default function Footer() {
                 <li>
                   <span className="text-gray-600 dark:text-gray-400 text-sm cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center gap-2 group">
                     <span className="w-0 group-hover:w-2 h-0.5 bg-blue-600 rounded-full transition-all duration-300"></span>
-                    FAQ
+                    {/* FAQ */}
                   </span>
                 </li>
                 <li>
