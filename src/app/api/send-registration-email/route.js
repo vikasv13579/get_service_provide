@@ -1,5 +1,5 @@
-import { Resend } from 'resend';
-import { NextResponse } from 'next/server';
+import { Resend } from "resend";
+import { NextResponse } from "next/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,10 +9,12 @@ export async function POST(request) {
     const { email, fullName, companyName, mobileNumber } = body;
 
     // Get admin emails (supports multiple emails)
-    const adminEmails = process.env.ADMIN_EMAIL.split(',').map(email => email.trim());
-    
+    const adminEmails = process.env.ADMIN_EMAIL.split(",").map((email) =>
+      email.trim()
+    );
+
     // Debug: Log emails being sent to
-    console.log('📧 Sending registration email to:', adminEmails);
+    console.log("📧 Sending registration email to:", adminEmails);
 
     // HTML email template
     const emailHTML = `
@@ -98,7 +100,9 @@ export async function POST(request) {
               
               <div class="info-row">
                 <span class="label">⏰ Time:</span>
-                <span class="value">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</span>
+                <span class="value">${new Date().toLocaleString("en-IN", {
+                  timeZone: "Asia/Kolkata",
+                })}</span>
               </div>
               
               <p style="margin-top: 30px; padding: 15px; background: #e8f5e9; border-radius: 4px; border-left: 4px solid #4caf50;">
@@ -117,9 +121,9 @@ export async function POST(request) {
     // Send SEPARATE email to EACH admin (better deliverability!)
     const emailPromises = adminEmails.map((adminEmail) =>
       resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: "Gem Service <noreply@gemcore.co.in>",
         to: adminEmail, // Send individually to each admin
-        subject: '🎉 New User Registration - Gem Service',
+        subject: "🎉 New User Registration - Gem Service",
         html: emailHTML,
       })
     );
@@ -129,42 +133,55 @@ export async function POST(request) {
 
     // Log results with detailed information
     results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
+      if (result.status === "fulfilled") {
         const response = result.value;
-        console.log(`📧 Full response for ${adminEmails[index]}:`, JSON.stringify(response));
-        
+        console.log(
+          `📧 Full response for ${adminEmails[index]}:`,
+          JSON.stringify(response)
+        );
+
         if (response.error) {
-          console.error(`❌ Resend error for ${adminEmails[index]}:`, response.error);
+          console.error(
+            `❌ Resend error for ${adminEmails[index]}:`,
+            response.error
+          );
         } else if (response.data) {
           console.log(`✅ Email sent to ${adminEmails[index]}:`, response.data);
         } else {
-          console.warn(`⚠️ No data/error for ${adminEmails[index]} - Response:`, response);
+          console.warn(
+            `⚠️ No data/error for ${adminEmails[index]} - Response:`,
+            response
+          );
         }
       } else {
-        console.error(`❌ Promise rejected for ${adminEmails[index]}:`, result.reason);
+        console.error(
+          `❌ Promise rejected for ${adminEmails[index]}:`,
+          result.reason
+        );
       }
     });
 
     // Check if at least one email was sent successfully
-    const successCount = results.filter(r => r.status === 'fulfilled').length;
-    
+    const successCount = results.filter((r) => r.status === "fulfilled").length;
+
     if (successCount === 0) {
-      return NextResponse.json({ error: 'Failed to send to any admin' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to send to any admin" },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       sent: successCount,
       total: adminEmails.length,
-      message: `Sent to ${successCount}/${adminEmails.length} admins`
+      message: `Sent to ${successCount}/${adminEmails.length} admins`,
     });
-
   } catch (error) {
-    console.error('❌ API error:', error);
+    console.error("❌ API error:", error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: "Failed to send email" },
       { status: 500 }
     );
   }
 }
-

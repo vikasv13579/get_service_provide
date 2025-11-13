@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,7 +16,7 @@ export async function POST(request) {
 
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
@@ -25,7 +25,7 @@ export async function POST(request) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: "Invalid email format" },
         { status: 400 }
       );
     }
@@ -34,25 +34,32 @@ export async function POST(request) {
     const contactData = {
       name,
       email,
-      phone: body.phone || '',
-      company: body.company || '',
+      phone: body.phone || "",
+      company: body.company || "",
       subject,
       message,
-      userId: body.userId || 'guest',
+      userId: body.userId || "guest",
       userEmail: body.userEmail || email,
       userAuthenticated: body.userAuthenticated || false,
       timestamp: body.timestamp || new Date().toISOString(),
-      status: 'new',
+      status: "new",
     };
 
     // Log the submission
-    console.log('📧 New Contact Form Submission:', contactData.name, '-', contactData.email);
+    console.log(
+      "📧 New Contact Form Submission:",
+      contactData.name,
+      "-",
+      contactData.email
+    );
 
     // Get admin emails (supports multiple emails)
-    const adminEmails = process.env.ADMIN_EMAIL.split(',').map(email => email.trim());
-    
+    const adminEmails = process.env.ADMIN_EMAIL.split(",").map((email) =>
+      email.trim()
+    );
+
     // Debug: Log emails being sent to
-    console.log('📧 Sending contact form email to:', adminEmails);
+    console.log("📧 Sending contact form email to:", adminEmails);
 
     // HTML email template
     const emailHTML = `
@@ -140,45 +147,69 @@ export async function POST(request) {
               
               <div class="info-row">
                 <span class="label">📧 Email:</span>
-                <span class="value"><a href="mailto:${contactData.email}" style="color: #10b981;">${contactData.email}</a></span>
+                <span class="value"><a href="mailto:${
+                  contactData.email
+                }" style="color: #10b981;">${contactData.email}</a></span>
               </div>
               
-              ${contactData.phone ? `
+              ${
+                contactData.phone
+                  ? `
               <div class="info-row">
                 <span class="label">📱 Phone:</span>
                 <span class="value"><a href="tel:${contactData.phone}" style="color: #10b981;">${contactData.phone}</a></span>
               </div>
-              ` : ''}
+              `
+                  : ""
+              }
               
-              ${contactData.company ? `
+              ${
+                contactData.company
+                  ? `
               <div class="info-row">
                 <span class="label">🏢 Company:</span>
                 <span class="value">${contactData.company}</span>
               </div>
-              ` : ''}
+              `
+                  : ""
+              }
               
               <div class="info-row">
                 <span class="label">📋 Subject:</span>
-                <span class="value"><strong>${contactData.subject}</strong></span>
+                <span class="value"><strong>${
+                  contactData.subject
+                }</strong></span>
               </div>
               
               <div class="info-row">
                 <span class="label">⏰ Time:</span>
-                <span class="value">${new Date(contactData.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</span>
+                <span class="value">${new Date(
+                  contactData.timestamp
+                ).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</span>
               </div>
               
               <div class="info-row">
                 <span class="label">👥 User Type:</span>
-                <span class="value">${contactData.userAuthenticated ? '✅ Registered User' : '👤 Guest'}</span>
+                <span class="value">${
+                  contactData.userAuthenticated
+                    ? "✅ Registered User"
+                    : "👤 Guest"
+                }</span>
               </div>
               
               <h3 style="color: #10b981; margin-top: 30px;">💬 Message:</h3>
               <div class="message-box">
-                <p style="margin: 0; white-space: pre-wrap;">${contactData.message}</p>
+                <p style="margin: 0; white-space: pre-wrap;">${
+                  contactData.message
+                }</p>
               </div>
               
               <div style="text-align: center;">
-                <a href="mailto:${contactData.email}?subject=Re: ${encodeURIComponent(contactData.subject)}" class="reply-button">
+                <a href="mailto:${
+                  contactData.email
+                }?subject=Re: ${encodeURIComponent(
+      contactData.subject
+    )}" class="reply-button">
                   Reply to ${contactData.name}
                 </a>
               </div>
@@ -196,7 +227,7 @@ export async function POST(request) {
     try {
       const emailPromises = adminEmails.map((adminEmail) =>
         resend.emails.send({
-          from: 'onboarding@resend.dev',
+          from: "Gem Service <noreply@gemcore.co.in>",
           to: adminEmail, // Send individually to each admin
           replyTo: contactData.email, // Admin can reply directly to the user
           subject: `📩 New Contact Form - ${contactData.subject}`,
@@ -209,24 +240,36 @@ export async function POST(request) {
 
       // Log results with detailed information
       results.forEach((result, index) => {
-        if (result.status === 'fulfilled') {
+        if (result.status === "fulfilled") {
           const { data, error } = result.value;
           if (error) {
             console.error(`❌ Resend error for ${adminEmails[index]}:`, error);
           } else if (data) {
-            console.log(`✅ Contact email sent to ${adminEmails[index]}:`, data);
+            console.log(
+              `✅ Contact email sent to ${adminEmails[index]}:`,
+              data
+            );
           } else {
-            console.warn(`⚠️ No data returned for ${adminEmails[index]} - might be blocked or invalid`);
+            console.warn(
+              `⚠️ No data returned for ${adminEmails[index]} - might be blocked or invalid`
+            );
           }
         } else {
-          console.error(`❌ Promise rejected for ${adminEmails[index]}:`, result.reason);
+          console.error(
+            `❌ Promise rejected for ${adminEmails[index]}:`,
+            result.reason
+          );
         }
       });
 
-      const successCount = results.filter(r => r.status === 'fulfilled').length;
-      console.log(`📧 Contact form: Sent to ${successCount}/${adminEmails.length} admins`);
+      const successCount = results.filter(
+        (r) => r.status === "fulfilled"
+      ).length;
+      console.log(
+        `📧 Contact form: Sent to ${successCount}/${adminEmails.length} admins`
+      );
     } catch (emailError) {
-      console.error('❌ Email error:', emailError);
+      console.error("❌ Email error:", emailError);
       // Continue anyway - don't fail the request if email fails
     }
 
@@ -234,7 +277,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Your message has been received. We will get back to you soon!',
+        message:
+          "Your message has been received. We will get back to you soon!",
         data: {
           id: Date.now().toString(), // In production, use the actual DB ID
           timestamp: contactData.timestamp,
@@ -242,14 +286,13 @@ export async function POST(request) {
       },
       { status: 200 }
     );
-
   } catch (error) {
-    console.error('❌ Error processing contact form:', error);
+    console.error("❌ Error processing contact form:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: 'Failed to process your request. Please try again later.',
+        error: "Failed to process your request. Please try again later.",
       },
       { status: 500 }
     );
@@ -262,8 +305,8 @@ export async function POST(request) {
  */
 export async function GET() {
   return NextResponse.json({
-    status: 'ok',
-    message: 'Contact API is running',
+    status: "ok",
+    message: "Contact API is running",
     timestamp: new Date().toISOString(),
   });
 }
